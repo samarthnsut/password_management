@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Password Page
+        </title>
+        <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel = "stylesheet" href = "/userpage.css" >
+        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    </head>
+    <body>
+        <script>
+
+        <% if(flash.success && flash.success.length > 0) { %>
+            new Noty({
+                theme: 'metroui',
+                text: "<%= flash.success %>",
+                type:  'success',
+                layout:  'topRight',
+                timeout : 1500
+
+            }).show();
+            <% } %>
+            <% if(flash.error && flash.error.length > 0) { %>
+            new Noty({
+                theme: 'metroui',
+                text: "<%= flash.success %>",
+                type:  'error',
+                layout:  'topRight',
+                timeout : 2000
+
+            }).show();
+            <% } %>
+
+        </script>
+      
+        <div id="heading">
+            <h1 id="he1">
+                WELCOME <%= account.name %> to your own collection of passwords
+            </h1>
+           
+        </div>
+        <div id="signout">
+            <a href="/sign-out" id="sign">Sign Out</a>
+        </div>
+        <section>
+            <div id="addp">
+                <div id="phead">
+                    <h1>
+                        Add A New Password
+                    </h1>
+                </div>
+                <div id="form">
+                   <form class="needs-validation" action="/create-new" method="POST">
+                     
+                         <br><br>
+                         <div class="label"> <label><b>TITLE:</b></label></div><br>
+
+                          <input type="text" name="title" placeholder="enter the website or app name"><br><br>
+                     
+                        <div class="label"> <label><b>PASSWORD:</b></label></div><br>
+                          <input type="text" name="pass" placeholder="enter the password"><br><br>
+
+                           <br>
+                             <button type="submit" class="btn btn-primary" id="submit">
+                                <i class="fa fa-plus" style="color: white; margin-left: 5px;"></i>
+                                Add Password
+                             </button><br>
+                        
+                        
+                   </form>
+                 </div>
+            </div>
+        </section>
+      
+        <div>
+            <h1>
+                Your Saved Passwords
+            </h1>
+        </div>
+        <div id="saved-p">
+            
+                <% for(element of elements){ %>
+                    <br>
+                    
+                    <% var cid , pid %> 
+                    <% cid = element.account._id %>
+                    <%  pid= account._id %>
+                    <% if(String(cid)== String(pid)) { %>
+                       <div id="p-container">
+                         <b>
+                             <div id="p-content">
+                               <span id="title"> <%= element.title %>  : </span>
+                               <span id="pass"> <%= element.pass %> </span>
+                             </div>
+                          
+                         </b> <br>
+                             <div id="button">
+                                 <a href="/delete/<%= element._id%>">
+                                    <button type="submit" class="btn btn-primary" id="del">
+                                        <i class="fa fa-cross" style="color: white; margin-left: 5px;"></i>
+                                    Delete
+                                     </button>
+                                </a>
+                                
+                                
+                                    <button type="submit" class="btn btn-primary" id="update">
+                                        <i class="fa fa-multiply" style="color: white; margin-left: 5px;"></i>
+                                        update
+                                     </button>
+                                     <br><br>
+                                <form method="POST" action="/update/<%= element._id%>" id="updatep">
+                                    <input type="text" name="pass" placeholder="enter new password"><br>
+                                   <br> <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                                
+                             </div>
+                       </div>
+                          
+                          
+                       
+                    <% } %>
+                    <% } %>
+            
+        </div>
+    <script src="../assets/userpage.js"></script>
+    <script src="../assets/jquery.js"></script>
+    </body>
+</html>
