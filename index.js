@@ -31,7 +31,7 @@ app.use(passport.session())
 
 app.use(passport.setAuthenticatedAccount);
 
-app.use(flash());
+app.use(flash())
 app.use(mwares.setflash);
 
 //Starting server at port 8000
